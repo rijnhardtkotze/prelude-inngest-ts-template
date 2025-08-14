@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "type" : "module",
+  "type": "module",
   "scripts": {
     "dev": "next dev -p 3000 -H 0.0.0.0",
     "build": "next build",
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "inngest": "^3.40.1",
     "node-fetch": "^3.3.1"
   },
   "devDependencies": {
