@@ -6,8 +6,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Inngest Guide',
-  description: 'A Next.js app with Inngest integration',
+  title: 'Next.js + Inngest Template',
+  description: 'A production-ready Next.js template with Inngest integration',
 }
 
 export default function RootLayout({
