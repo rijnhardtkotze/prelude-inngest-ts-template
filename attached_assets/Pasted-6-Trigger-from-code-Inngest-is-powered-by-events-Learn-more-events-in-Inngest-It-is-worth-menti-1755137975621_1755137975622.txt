@@ -1,0 +1,54 @@
+6. Trigger from code
+Inngest is powered by events.
+
+Learn more: events in Inngest.
+It is worth mentioning here that an event-driven approach allows you to:
+
+Trigger one or multiple functions from one event, aka fan-out.
+Store received events for a historical record of what happened in your application.
+Use stored events to replay functions when there are issues in production.
+Interact with long-running functions by sending new events including waiting for input and cancelling.
+To trigger Inngest functions to run in the background, you will need to send events from your application to Inngest. Once the event is received, it will automatically invoke all functions that are configured to be triggered by it.
+
+To send an event from your code, you can use the Inngest client's send() method.
+
+Learn more: send() method.
+Note that with the send method used below you now can:
+
+Send one or more events within any API route.
+Include any data you need in your function within the data object.
+In a real-world app, you might send events from API routes that perform an action, like registering users (for example, app/user.signup) or creating something (for example, app/report.created).
+
+You will now send an event from within your Next.js app: from the “hello” Next.js API function. To do so, create a new API handler in the src/app/api/hello/route.ts file:
+
+src/app/api/hello/route.ts
+
+Copy
+Copied
+import { NextResponse } from "next/server";
+import { inngest } from "../../../inngest/client"; // Import our client
+
+// Opt out of caching; every request should send a new event
+export const dynamic = "force-dynamic";
+
+// Create a simple async Next.js API route handler
+export async function GET() {
+  // Send your event payload to Inngest
+  await inngest.send({
+    name: "test/hello.world",
+    data: {
+      email: "testUser@example.com",
+    },
+  });
+
+  return NextResponse.json({ message: "Event sent!" });
+}
+👉 Note that we use "force-dynamic" to ensure we always send a new event on every request. In most situations, you'll probably want to send an event during a POST request so that you don't need this config option.
+
+Every time this API route is requested, an event is sent to Inngest. To test it, open http://localhost:3000/api/hello (change your port if your Next.js app is running elsewhere). You should see the following output: {"message":"Event sent!"}
+
+Web browser showing the JSON response of the /api/hello endpoint
+If you go back to the Inngest Dev Server, you will see a new run is triggered by this event:
+
+Inngest Dev Server web interface's runs tab with a third run triggered by the 'test/hello.world' event
+And - that's it! You now have learned how to create Inngest functions and you have sent events to trigger those functions. Congratulations 🥳
