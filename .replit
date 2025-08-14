@@ -17,3 +17,15 @@ ignorePorts = false
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[workflows]
+runButton = "Next.js Dev"
+
+[[workflows.workflow]]
+name = "Next.js Dev"
+author = 45389901
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm run dev"
